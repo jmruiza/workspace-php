@@ -1,0 +1,28 @@
+version: "2"
+services:
+  
+  mysql:
+    image: 'mysql:5.6.35'
+    environment:
+      MYSQL_ROOT_PASSWORD: "P455w0rd"
+      MYSQL_DATABASE: docker
+    volumes:
+      - ./docker/volumes/mysql:/var/lib/mysql
+  
+  php:
+    build: docker/php/
+    links:
+      - mysql:mysqldb
+    volumes:
+      - ./www:/var/www/html
+    ports:
+      - 9000:80
+  
+#  apache:
+#    build: docker/apache/
+#    links:
+#      - php:phpfpm
+#    volumes:
+#      - ./www:/var/www/html
+#    ports:
+#      - 9000:80
